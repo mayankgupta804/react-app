@@ -1,16 +1,31 @@
-import Alert from "./components/Alert";
 import Button from "./components/Button";
 import { useState } from "react";
+import { produce } from "immer";
 
 function App() {
-  const [alertVisible, setAlertVisibility] = useState(false);
+  const [pizza, setPizza] = useState({
+    name: "Spicy Toppings",
+    toppings: ["Mushroom"],
+  });
+
+  // Solution 1: Using the vanilla React way
+  // const handleClick = () => {
+  //   setPizza({ ...pizza, toppings: [...pizza.toppings, "Cheese"] });
+  // };
+
+  // Solution 2
+  const handleClick = () => {
+    setPizza(
+      produce((draft) => {
+        draft.toppings.push("Cheese");
+      })
+    );
+  };
 
   return (
     <>
-      {alertVisible && (
-        <Alert onClose={() => setAlertVisibility(false)}>My Alert</Alert>
-      )}
-      <Button onClick={() => setAlertVisibility(true)}>My Button</Button>
+      <Button onClick={handleClick}>Click me!</Button>
+      <p>{pizza.toppings.map((top) => top + ",")}</p>
     </>
   );
 }
