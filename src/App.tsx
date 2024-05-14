@@ -11,7 +11,7 @@ function App() {
 
   // Solution 1: Using vanilla React
   // const handleClick = () => {
-  //   setGame({ ...game, player: { name: "Joe" } });
+  //   setGame({ ...game, player: { ...game.player, name: "Joe" } });
   // };
 
   // Solution 2: Using immer
