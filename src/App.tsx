@@ -1,16 +1,32 @@
-import Alert from "./components/Alert";
-import Button from "./components/Button";
 import { useState } from "react";
+import { produce } from "immer";
 
 function App() {
-  const [alertVisible, setAlertVisibility] = useState(false);
+  const [game, setGame] = useState({
+    id: 1,
+    player: {
+      name: "Bob",
+    },
+  });
+
+  // Solution 1: Using vanilla React
+  // const handleClick = () => {
+  //   setGame({ ...game, player: { name: "Joe" } });
+  // };
+
+  // Solution 2: Using immer
+  const handleClick = () => {
+    setGame(
+      produce((draft) => {
+        draft.player.name = "Joe";
+      })
+    );
+  };
 
   return (
     <>
-      {alertVisible && (
-        <Alert onClose={() => setAlertVisibility(false)}>My Alert</Alert>
-      )}
-      <Button onClick={() => setAlertVisibility(true)}>My Button</Button>
+      <button onClick={handleClick}>Click me!!</button>
+      <p>{game.player.name}</p>
     </>
   );
 }
