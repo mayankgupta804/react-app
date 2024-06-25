@@ -1,19 +1,20 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import Button from "./Button";
 
 interface Props {
   maxChars?: number;
-  children: ReactNode;
+  children: string;
 }
 
 const ExpandableText = ({ children, maxChars = 100 }: Props) => {
   const [showFullText, updateShowFullText] = useState(false);
 
+  if (children.length < 100) {
+    return <p>{children}</p>;
+  }
   return (
-    <span style={{ display: "inline" }}>
-      {showFullText
-        ? children
-        : children?.toString().substring(0, maxChars) + "..."}
+    <>
+      {showFullText ? children : children.substring(0, maxChars) + "..."}
       <Button
         onClick={() => {
           updateShowFullText(!showFullText);
@@ -21,7 +22,7 @@ const ExpandableText = ({ children, maxChars = 100 }: Props) => {
       >
         {showFullText ? "Less" : "More"}
       </Button>
-    </span>
+    </>
   );
 };
 
