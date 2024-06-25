@@ -1,55 +1,30 @@
-import Button from "./components/Button";
-import { useState } from "react";
+import ExpandableText from "./components/ExpandableText";
 
 function App() {
-  const [cart, setCart] = useState({
-    discount: 0.1,
-    items: [
-      { id: 1, title: "Product 1", quantity: 1 },
-      { id: 2, title: "Product 2", quantity: 2 },
-    ],
-  });
-
-  // Solution 1: Using the vanilla React way
-  // const handleClick = () => {
-  //   setPizza({ ...pizza, toppings: [...pizza.toppings, "Cheese"] });
-  // };
-
-  // Solution 2
-  // const handleClick = () => {
-  //   setPizza(
-  //     produce((draft) => {
-  //       draft.toppings.push("Cheese");
-  //     })
-  //   );
-  // };
-
-  // Solution 3
-  const handleClick = () => {
-    const updatedItems = cart.items.map((item) => {
-      if (item.id === 1) {
-        return { ...item, quantity: item.quantity + 1 };
-      } else {
-        return item;
-      }
-    });
-
-    setCart({
-      ...cart,
-      items: [...updatedItems],
-    });
-  };
-
   return (
     <>
-      <Button
-        onClick={() => {
-          console.log(cart);
-          handleClick();
-        }}
-      >
-        Click me!
-      </Button>
+      <ExpandableText>
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
+        ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis
+        dis parturient montes, nascetur ridiculus mus. Donec quam felis,
+        ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa
+        quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget,
+        arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
+        Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras
+        dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend
+        tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac,
+        enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
+        Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean
+        imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper
+        ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus
+        eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing
+        sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar,
+        hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec
+        vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit
+        amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris
+        sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget
+        bibendum sodales, augue velit cursus nunc,
+      </ExpandableText>
     </>
   );
 }
