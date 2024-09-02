@@ -1,12 +1,18 @@
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 const schema = z.object({
   description: z
     .string()
-    .min(3, { message: "Description should contain at least 3 characters." }),
-  amount: z.number({ invalid_type_error: "Amount is required." }),
+    .min(3, { message: "Description should contain at least 3 characters" }),
+  amount: z
+    .number({
+      invalid_type_error: "Amount must be a number",
+      required_error: "Amount is required",
+    })
+    .positive(),
   category: z.string().min(3, { message: "Category is required." }),
 });
 
@@ -16,11 +22,17 @@ const Form = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = (data: FieldValues) => {
-    console.log(data);
+  const [items, setItems] = useState<FormData[]>([]);
+
+  const onSubmit = (data: FormData) => {
+    const newItems = [...items, { ...data }];
+    setItems(newItems);
+    console.log(newItems);
+    reset();
   };
 
   return (
