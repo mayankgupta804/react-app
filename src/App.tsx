@@ -1,23 +1,16 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+
+const connect = () => console.log("Connecting to the server");
+const disconnect = () => console.log("Disconnecting...");
 
 function App() {
-  const ref = useRef<HTMLInputElement>(null);
-
-  // after render, these functions will be called by React
-  // in order
   useEffect(() => {
-    ref.current?.focus();
+    connect();
+
+    return () => disconnect();
   });
 
-  useEffect(() => {
-    window.document.title = "My App";
-  });
-
-  return (
-    <>
-      <input ref={ref} type="text" className="form-control" />
-    </>
-  );
+  return <></>;
 }
 
 export default App;
