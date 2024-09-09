@@ -1,32 +1,21 @@
-import { useState } from "react";
-import { produce } from "immer";
+import { useEffect, useRef } from "react";
 
 function App() {
-  const [game, setGame] = useState({
-    id: 1,
-    player: {
-      name: "Bob",
-    },
+  const ref = useRef<HTMLInputElement>(null);
+
+  // after render, these functions will be called by React
+  // in order
+  useEffect(() => {
+    ref.current?.focus();
   });
 
-  // Solution 1: Using vanilla React
-  // const handleClick = () => {
-  //   setGame({ ...game, player: { ...game.player, name: "Joe" } });
-  // };
-
-  // Solution 2: Using immer
-  const handleClick = () => {
-    setGame(
-      produce((draft) => {
-        draft.player.name = "Joe";
-      })
-    );
-  };
+  useEffect(() => {
+    window.document.title = "My App";
+  });
 
   return (
     <>
-      <button onClick={handleClick}>Click me!!</button>
-      <p>{game.player.name}</p>
+      <input ref={ref} type="text" className="form-control" />
     </>
   );
 }
