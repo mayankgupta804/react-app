@@ -1,5 +1,5 @@
 import ListGroup from "./components/ListGroup";
-import "./App.css";
+
 function App() {
   const items = ["Ranchi", "Kathmandu", "Bangkok"];
 
