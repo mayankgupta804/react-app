@@ -4,7 +4,7 @@ import styled from "styled-components";
 const List = styled.ul`
   list-style: none;
   padding: 0;
-  color: blue;
+  color: red;
 `;
 
 interface ListItemProps {
@@ -32,7 +32,7 @@ function ListGroup({ items, heading, onSelectItem }: Props) {
       <List>
         {items.map((item, index) => (
           <ListItem
-            active={selectedIndex === index}
+            active={index === selectedIndex}
             className={
               selectedIndex === index
                 ? "list-group-item active"
