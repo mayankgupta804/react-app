@@ -1,0 +1,17 @@
+.button {
+    padding: 8px 12px;
+    border: 0vmax;
+    margin: 4px;
+    border-radius: 5px;
+    border: 0;
+}
+
+.btn-primary {
+    background: aqua;
+    color: white;
+}
+
+.btn-danger {
+    background: red;
+    color: white;
+}
