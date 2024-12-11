@@ -8,15 +8,13 @@ interface Props {
 const Like = ({ onClick }: Props) => {
   const [state, setState] = useState(false);
 
+  const toggle = () => {
+    onClick();
+    setState(!state);
+  };
+
   return (
-    <AiFillHeart
-      color={state ? "red" : "white"}
-      size={50}
-      onClick={() => {
-        onClick();
-        setState(!state);
-      }}
-    />
+    <AiFillHeart color={state ? "red" : "blue"} size={50} onClick={toggle} />
   );
 };
 
