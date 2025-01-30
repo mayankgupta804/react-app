@@ -8,9 +8,10 @@ interface Item {
 
 interface Props {
   items: Item[];
+  onDelete: (description: string) => void;
 }
 
-const ExpenseList = ({ items }: Props) => {
+const ExpenseList = ({ items, onDelete }: Props) => {
 
   return (
     <table className="table table-bordered">
@@ -30,7 +31,7 @@ const ExpenseList = ({ items }: Props) => {
               <td>${item.amount}</td>
               <td>{item.category}</td>
               <td>
-                <Button color="danger" onClick={() => console.log("deleted")}>
+                <Button color="danger" onClick={() => onDelete(item.description)}>
                   Delete
                 </Button>
               </td>
