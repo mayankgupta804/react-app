@@ -1,12 +1,12 @@
 interface Props {
   categories: string[];
-  onSelect: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onSelect: (category: string) => void;
 }
 
-const Filter = ({ categories, onSelect }: Props) => {
+const ExpenseFilter = ({ categories, onSelect }: Props) => {
   return (
     <select
-      onChange={onSelect}
+      onChange={(e) => onSelect(e.target.value)}
       className="form-select"
       defaultValue="All Categories"
       aria-label="Default select example"
@@ -17,4 +17,4 @@ const Filter = ({ categories, onSelect }: Props) => {
   )
 }
 
-export default Filter;
+export default ExpenseFilter;

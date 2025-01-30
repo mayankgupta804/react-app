@@ -7,10 +7,10 @@ interface Item {
 }
 
 interface Props {
-  items: Item[]
+  items: Item[];
 }
 
-const List = ({ items }: Props) => {
+const ExpenseList = ({ items }: Props) => {
 
   return (
     <table className="table table-bordered">
@@ -48,4 +48,4 @@ const List = ({ items }: Props) => {
   )
 }
 
-export default List;
+export default ExpenseList;
