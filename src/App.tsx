@@ -1,4 +1,5 @@
-import List from "./components/expnenseList/list";
+import Filter from "./components/expenseTracker/filter";
+import List from "./components/expenseTracker/list";
 
 function App() {
   const items = [
@@ -6,8 +7,13 @@ function App() {
     { "description": "Carrots", "amount": 10, "category": "Groceries" }
   ]
 
+  const handleOnSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(e.target.value)
+  }
+
   return (
     <>
+      <Filter onSelect={handleOnSelect} categories={items.map(item => item.category)} />
       <List items={items} />
     </>
   );
