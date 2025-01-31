@@ -1,7 +1,7 @@
 import { useState } from "react";
-import ExpenseFilter from "./components/expenseTracker/Filter";
-import ExpenseList from "./components/expenseTracker/List";
-import ExpenseForm from "./components/expenseTracker/Form";
+import ExpenseFilter from "./expense-tracker/components/Filter";
+import ExpenseList from "./expense-tracker/components/List";
+import ExpenseForm from "./expense-tracker/components/Form";
 import { FieldValues } from "react-hook-form";
 import Item from "./types/Item";
 
