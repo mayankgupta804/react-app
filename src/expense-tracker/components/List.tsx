@@ -35,13 +35,15 @@ const ExpenseList = ({ items, onDelete }: Props) => {
             </tr>
           );
         })}
+      </tbody>
+      <tfoot>
         <tr>
           <td>Total</td>
           <td>${items.reduce((acc, item) => acc + item.amount, 0)}</td>
           <td></td>
           <td></td>
         </tr>
-      </tbody>
+      </tfoot>
     </table>
   )
 }
