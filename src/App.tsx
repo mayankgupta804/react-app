@@ -3,45 +3,47 @@ import ExpenseFilter from "./components/expenseTracker/Filter";
 import ExpenseList from "./components/expenseTracker/List";
 import ExpenseForm from "./components/expenseTracker/Form";
 import { FieldValues } from "react-hook-form";
+import Item from "./types/Item";
 
 function App() {
   const originalItems = [
     { "description": "Electricity", "amount": 100, "category": "Utilities" },
-    { "description": "Carrots", "amount": 10, "category": "Groceries" }
+    { "description": "Carrots", "amount": 10, "category": "Groceries" },
+    { "description": "Movie", "amount": 26, "category": "Entertainment" }
   ];
 
-  const [items, setItems] = useState([...originalItems])
+  const categories = originalItems.map(item => item.category);
 
-  interface Item {
-    description: string;
-    amount: number;
-    category: string;
-  }
+  const [items, setItems] = useState([...originalItems]);
+  const [filteredItems, setFilteredItems] = useState([...originalItems])
 
   const handleSelect = (category: string) => {
     if (category === "All Categories") {
-      setItems(originalItems);
+      setFilteredItems(items);
       return;
     }
-    setItems(originalItems.filter(item => item.category === category));
+    setFilteredItems(items.filter(item => item.category === category));
   }
 
   const handleDelete = (description: string) => {
-    setItems(items.filter(item => item.description !== description))
+    const remainingItems = items.filter(item => item.description !== description);
+    setItems(remainingItems);
+    setFilteredItems(remainingItems);
   }
 
   const handleOnSubmit = (data: FieldValues) => {
     const newItems = [...items, data as Item];
     setItems(newItems);
+    setFilteredItems(newItems);
   }
 
   return (
     <>
-      <ExpenseForm onSubmit={handleOnSubmit} categories={items.map(item => item.category)} />
+      <ExpenseForm onSubmit={handleOnSubmit} categories={categories} />
       <br />
-      <ExpenseFilter onSelect={handleSelect} categories={items.map(item => item.category)} />
+      <ExpenseFilter onSelect={handleSelect} categories={categories} />
       <br />
-      <ExpenseList onDelete={handleDelete} items={items} />
+      <ExpenseList onDelete={handleDelete} items={filteredItems} />
     </>
   );
 }

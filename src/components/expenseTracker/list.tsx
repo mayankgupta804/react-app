@@ -1,10 +1,7 @@
+import Item from "../../types/Item";
 import Button from "../Button";
+import { nanoid } from 'nanoid';
 
-interface Item {
-  description: string;
-  amount: number;
-  category: string;
-}
 
 interface Props {
   items: Item[];
@@ -26,7 +23,7 @@ const ExpenseList = ({ items, onDelete }: Props) => {
       <tbody>
         {items.map(item => {
           return (
-            <tr key={item.description}>
+            <tr key={nanoid()}>
               <td>{item.description}</td>
               <td>${item.amount}</td>
               <td>{item.category}</td>
