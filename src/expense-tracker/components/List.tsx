@@ -9,6 +9,8 @@ interface Props {
 }
 
 const ExpenseList = ({ items, onDelete }: Props) => {
+  if (items.length === 0)
+    return null;
 
   return (
     <table className="table table-bordered">
@@ -39,7 +41,7 @@ const ExpenseList = ({ items, onDelete }: Props) => {
       <tfoot>
         <tr>
           <td>Total</td>
-          <td>${items.reduce((acc, item) => acc + item.amount, 0)}</td>
+          <td>${items.reduce((acc, item) => acc + item.amount, 0).toFixed(2)}</td>
           <td></td>
           <td></td>
         </tr>

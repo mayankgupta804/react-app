@@ -4,46 +4,45 @@ import ExpenseList from "./expense-tracker/components/List";
 import ExpenseForm from "./expense-tracker/components/Form";
 import { FieldValues } from "react-hook-form";
 import Item from "./types/Item";
+import { categories } from "./constants";
 
 function App() {
-  const originalItems = [
-    { "description": "Electricity", "amount": 100, "category": "Utilities" },
-    { "description": "Carrots", "amount": 10, "category": "Groceries" },
-    { "description": "Movie", "amount": 26, "category": "Entertainment" }
-  ];
+  const [expenses, setExpenses] = useState([
+    { "description": "Electricity", "amount": 100.21, "category": "Utilities" },
+    { "description": "Carrots", "amount": 10.45, "category": "Groceries" },
+    { "description": "Movie", "amount": 26.99, "category": "Entertainment" }
+  ]);
 
-  const categories = originalItems.map(item => item.category);
+  const [selectedCategory, setCategory] = useState("")
 
-  const [items, setItems] = useState([...originalItems]);
-  const [filteredItems, setFilteredItems] = useState([...originalItems])
-
-  const handleSelect = (category: string) => {
-    if (category === "All Categories") {
-      setFilteredItems(items);
-      return;
-    }
-    setFilteredItems(items.filter(item => item.category === category));
+  const handleSelect = (selectedCategory: string) => {
+    setCategory(selectedCategory);
   }
 
   const handleDelete = (description: string) => {
-    const remainingItems = items.filter(item => item.description !== description);
-    setItems(remainingItems);
-    setFilteredItems(remainingItems);
+    const remainingItems = expenses.filter(item => item.description !== description);
+    setExpenses(remainingItems);
   }
 
   const handleOnSubmit = (data: FieldValues) => {
-    const newItems = [...items, data as Item];
-    setItems(newItems);
-    setFilteredItems(newItems);
+    const newItems = [...expenses, data as Item];
+    setExpenses(newItems);
   }
+
+  const visibleExpenses = selectedCategory ?
+    expenses.filter(expense => expense.category === selectedCategory) : expenses;
 
   return (
     <>
-      <ExpenseForm onSubmit={handleOnSubmit} categories={categories} />
-      <br />
-      <ExpenseFilter onSelect={handleSelect} categories={categories} />
-      <br />
-      <ExpenseList onDelete={handleDelete} items={filteredItems} />
+      <div className="mb-3">
+        <ExpenseForm onSubmit={handleOnSubmit} categories={categories} />
+      </div>
+      <div className="mb-3">
+        <ExpenseFilter onSelect={handleSelect} categories={categories} />
+      </div>
+      <div className="mb-3">
+        <ExpenseList onDelete={handleDelete} items={visibleExpenses} />
+      </div>
     </>
   );
 }

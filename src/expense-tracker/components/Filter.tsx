@@ -8,10 +8,9 @@ const ExpenseFilter = ({ categories, onSelect }: Props) => {
     <select
       onChange={(e) => onSelect(e.target.value)}
       className="form-select"
-      defaultValue="All Categories"
       aria-label="Default select example"
     >
-      <option>All Categories</option>
+      <option value="">All Categories</option>
       {categories.map(category => <option key={category} value={category}>{category}</option>)}
     </select>
   )

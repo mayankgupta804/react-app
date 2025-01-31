@@ -2,13 +2,15 @@ import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
+import { categories } from "../../constants";
 
 const schema = z.object({
-  description: z.string().min(3, "Description must contain at least 3 characters"),
+  description: z.string().min(3, "Description must contain at least 3 characters").max(50),
   amount: z.
     number({ invalid_type_error: "Amount is required" }).
-    min(1, { message: "Amount cannot be 0" }),
-  category: z.string().min(1, "Please choose a valid category")
+    min(0.01, { message: "Amount cannot be 0" }).
+    max(100_000),
+  category: z.enum(categories)
 });
 
 interface Props {
@@ -23,15 +25,14 @@ const ExpenseForm = ({ onSubmit, categories }: Props) => {
     register,
     handleSubmit,
     reset,
-    formState,
-    formState: { errors, isValid },
+    formState: { isSubmitSuccessful, errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   useEffect(() => {
-    if (formState.isSubmitSuccessful) {
+    if (isSubmitSuccessful) {
       reset();
     }
-  }, [formState, reset]);
+  }, [isSubmitSuccessful, reset]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
