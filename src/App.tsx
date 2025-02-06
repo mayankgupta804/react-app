@@ -1,16 +1,35 @@
-import Alert from "./components/Alert";
-import Button from "./components/Button";
-import { useState } from "react";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
+interface User {
+  id: number;
+  name: string;
+}
+
+interface Error {
+  code: string;
+  message: string;
+}
 
 function App() {
-  const [alertVisible, setAlertVisibility] = useState(false);
+  const [users, setUsers] = useState<User[]>([]);
+  const [error, setError] = useState<Error>();
+
+  useEffect(() => {
+    axios.
+      get<User[]>("https://jsonplaceholder.typicode.com/usersx").
+      then((res) => setUsers(res.data)).
+      catch((err) => {
+        setError(err);
+      })
+  }, [])
 
   return (
     <>
-      {alertVisible && (
-        <Alert onClose={() => setAlertVisibility(false)}>My Alert</Alert>
-      )}
-      <Button onClick={() => setAlertVisibility(true)}>My Button</Button>
+      {error && <p>{error.code}</p>}
+      <ul>
+        {users.map(user => <li key={user.id}>{user.name}</li>)}
+      </ul>
     </>
   );
 }
