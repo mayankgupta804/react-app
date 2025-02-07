@@ -32,6 +32,4 @@ class UserService {
   }
 }
 
-const create = () => new UserService();
-
-export default create;
+export default new UserService();

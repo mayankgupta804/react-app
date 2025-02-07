@@ -1,34 +1,8 @@
-import { useEffect, useState } from 'react';
-import create, { User } from './services/user-service';
-
-interface Error {
-  code: string;
-  message: string;
-}
+import useUsers from './hooks/use-users';
+import userService from './services/user-service';
 
 function App() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [error, setError] = useState<Error>();
-  const [isLoading, setLoading] = useState(true);
-
-  const userService = create();
-
-  useEffect(() => {
-    const { request, cancel, cancelled } = userService.getAllUsers();
-
-    request.
-      then((res) => {
-        setUsers(res.data);
-        setLoading(false);
-      }).
-      catch((err) => {
-        if (err instanceof cancelled) return;
-        setError(err);
-        setLoading(false);
-      });
-
-    return cancel;
-  }, []);
+  const { users, setUsers, error, setError, isLoading } = useUsers();
 
   const handleDelete = (id: number) => {
     const originalUsers = [...users];
