@@ -1,36 +1,37 @@
-import { AxiosInstance } from "axios";
-import getAxiosInstance, {CanceledError} from "./api-client";
+import HTTPService from "./http-service";
 
 export interface User {
   id: number;
   name: string;
 }
 
-export default class UserService {
+class UserService {
 
-  client: AxiosInstance;
+  service: HTTPService;
+  path: string;
 
-  constructor(baseUrl: string) {
-    this.client = getAxiosInstance(baseUrl);
+  constructor() {
+    this.service = new HTTPService("https://jsonplaceholder.typicode.com");
+    this.path = "/users"
   }
 
   getAllUsers() {
-    const controller = new AbortController();
-
-    const request =  this.client.get<User[]>("/users", { signal: controller.signal });
-
-    return {request, cancel: () => controller.abort(), cancelled: CanceledError}
+    return this.service.getAll<User[]>(this.path);
   }
 
   deleteUser(id: number) {
-    return this.client.delete<User>("/users/" + id);
+    return this.service.delete(this.path, id);
   }
 
   addUser(user: User) {
-    return this.client.post<User>("/users/", user);
+    return this.service.create<User>(this.path, user);
   }
 
   updateUser(user: User) {
-    return this.client.patch<User>("/users/" + user.id, user);
+    return this.service.update<User>(this.path, user);
   }
 }
+
+const create = () => new UserService();
+
+export default create;

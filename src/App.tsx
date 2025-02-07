@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import UserService, { User } from './services/user-service';
+import create, { User } from './services/user-service';
 
 interface Error {
   code: string;
@@ -11,7 +11,7 @@ function App() {
   const [error, setError] = useState<Error>();
   const [isLoading, setLoading] = useState(true);
 
-  const userService = new UserService("https://jsonplaceholder.typicode.com");
+  const userService = create();
 
   useEffect(() => {
     const { request, cancel, cancelled } = userService.getAllUsers();
