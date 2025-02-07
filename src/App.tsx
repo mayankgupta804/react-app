@@ -38,7 +38,7 @@ function App() {
     const originalUsers = [...users];
     setUsers(users.filter(user => user.id != id));
     axios.
-      delete<User>("https://jsonplaceholder.typicode.com/usersx/" + id).
+      delete<User>("https://jsonplaceholder.typicode.com/users/" + id).
       then(res => console.log(res.status)).
       catch((err) => {
         setUsers(originalUsers);
@@ -57,7 +57,23 @@ function App() {
         setUsers(originalUsers);
         setError(err);
       });
+  }
 
+  const handleUpdate = (id: number) => {
+    const originalUsers = [...users];
+    const updatedUser = { id: id, name: "Gorky" };
+    setUsers(users.map(user => {
+      if (user.id === updatedUser.id) {
+        return updatedUser;
+      }
+      return user;
+    }));
+    axios.
+      patch<User>("https://jsonplaceholder.typicode.com/users/" + updatedUser.id, updatedUser).
+      catch((err) => {
+        setUsers(originalUsers);
+        setError(err);
+      });
   }
 
   return (
@@ -69,11 +85,18 @@ function App() {
       <ul className="list-group">
         {users.map(user =>
           <li className="list-group-item d-flex justify-content-between" key={user.id}>{user.name}
-            <button
-              onClick={() => handleDelete(user.id)}
-              className="btn btn-outline-danger">
-              Delete
-            </button>
+            <div>
+              <button
+                className="btn btn-outline-secondary mx-1"
+                onClick={() => handleUpdate(user.id)}>
+                Update
+              </button>
+              <button
+                onClick={() => handleDelete(user.id)}
+                className="btn btn-danger">
+                Delete
+              </button>
+            </div>
           </li>
         )}
       </ul>
